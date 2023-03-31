@@ -43,17 +43,19 @@
  *  \version 1.0
  *  \date Tue 28 March 2023 - 15:03:34
  *  \brief contains the type of the variable that the union contain
- *  \param 
+ *  \param VAR_TYPE_FLOAT   :   the variable is a float
+ *  \param VAR_TYPE_STRING  :   the variable is a string
  */
 
 typedef enum        s_type_var
 {
-    VAR_TYPE_FLOAT,
-    VAR_TYPE_LONG_INT,
+    VAR_TYPE_FLOAT = 1,
     VAR_TYPE_STRING         
 }                   t_type_var;
 
+
 /* -------------------------------------------------------------------------- */
+
 
 /*!
  *  \struct t_table_value
@@ -62,8 +64,7 @@ typedef enum        s_type_var
  *  \date Tue 28 March 2023 - 14:43:31
  *  \brief Structure of the table of the variables than can be in the linear optimisation table
  *  \param str_var_name[4]  : Name of the variable
- *  \param flt_var_value    : Value of the variable (float)
- *  \param lng_var_value    : Value of the variable (long int)
+ *  \param flt_var_value    : Value of the variable
  * 
  *  \details
  *   - All variables are coded in 4 octets
@@ -73,26 +74,53 @@ typedef union       s_table_value
 {
     char        str_value[4];
     float       flt_value;
-    long int    lng_value;
 }                   t_table_value;
 
+
 /* -------------------------------------------------------------------------- */
+
 
 /*!
  *  \struct t_data
  *  \author DURAND Nicolas Erich Pierre <nicolas.durand@cy-tech.fr>
  *  \version 1.0
  *  \date Tue 28 March 2023 - 15:04:45
- *  \brief 
- *  \param 
+ *  \brief link a variable with its type
+ *  \param type_var     : the type of the variable
+ *  \param table_var    : the variable
  */
 typedef struct              s_data
 {
     t_type_var          type_var;
-    t_table_value*      table_var;
+    t_table_value       table_var;
 }                           t_data;
 
+/* -------------------------------------------------------------------------- */
+
+
+/*!
+ *  \struct t_opti_table
+ *  \author DURAND Nicolas Erich Pierre <nicolas.durand@cy-tech.fr>
+ *  \version 1.0
+ *  \date Wed 29 March 2023 - 12:21:05
+ *  \brief the table for the linear optimization
+ *  \param data_arr : the array of the data
+ *  \param int_arg  : the number of arguments
+ */
+
+typedef struct          s_opti_table
+{
+    t_data**        data_arr;
+    int             int_arg;
+}                       t_opti_table;
+
 /* ********************************   MACROS   ******************************** */
+
+/*! 
+ *  \def ABORT_IF(a, msg)
+ *  \brief 
+ */
+#define ABORT_IF(a, msg) if(a) { fprintf(stderr,"%s",msg); exit(1); }
 
 
 /* ******************************** STRUCTURES ******************************** */
@@ -101,12 +129,79 @@ typedef struct              s_data
 /* ******************************* PROTOTYPES  ******************************* */
 
 
-t_data** init_table(size_t n);
-
+/*!
+ *  \fn static void swap_value(t_data* ptr_a, t_data* ptr_b )
+ *  \author DURAND Nicolas Erich Pierre <nicolas.durand@cy-tech.fr>
+ *  \version 1.0
+ *  \date Wed 29 March 2023 - 12:44:41
+ *  \brief swap the value of two the table
+ *  \param ptr_a : pointer to the first value
+ *  \param ptr_b : pointer to the second value
+ */
 static void swap_value(t_data* ptr_a, t_data* ptr_b);
 
-static void find_entry_var(t_data** arr);
+
+/*!
+ *  \fn static int* find_entry(t_opti_table tbl)
+ *  \author DURAND Nicolas Erich Pierre <nicolas.durand@cy-tech.fr>
+ *  \version 1.0
+ *  \date Wed 29 March 2023 - 12:53:09
+ *  \brief find the entry var of the table
+ *  \param tbl : the table to search
+ *  \return pointer to the index of the entry or NULL if not found 
+ */
+static int find_entry_var(t_table_value arr);
 
 
+/*!
+ *  \fn static int* find_exit(t_opti_table tbl)
+ *  \author DURAND Nicolas Erich Pierre <nicolas.durand@cy-tech.fr>
+ *  \version 1.0
+ *  \date Fri 31 March 2023 - 11:41:08
+ *  \brief find the exit var of the table
+ *  \param tbl : the table to search
+ *  \return pointer to the index of the exit or NULL if not found
+ */
+static int find_exit_var(t_opti_table arr);
+
+
+
+
+
+
+
+/*!
+ *  \fn void show_table(t_data** arr)
+ *  \author DURAND Nicolas Erich Pierre <nicolas.durand@cy-tech.fr>
+ *  \version 1.0
+ *  \date Wed 29 March 2023 - 10:52:26
+ *  \brief 
+ *  \param 
+ *  \return 
+ */
+void show_table(t_opti_table arr);
+
+/*!
+ *  \fn void free_table(t_opti_table tbl)
+ *  \author DURAND Nicolas Erich Pierre <nicolas.durand@cy-tech.fr>
+ *  \version 1.0
+ *  \date Wed 29 March 2023 - 12:47:17
+ *  \brief free the table
+ *  \param tbl : the table to free
+ *  \return set the table to NULL
+ */
+void free_table(t_opti_table tbl);
+
+
+/*!
+ *  \fn static t_opti_table** init_table()
+ *  \author DURAND Nicolas Erich Pierre <nicolas.durand@cy-tech.fr>
+ *  \version 1.0
+ *  \date Tue 28 March 2023 - 15:33:56
+ *  \brief  initialize the table 
+ *  \param int_nb_arg   :   number of argument
+ *  \return the optimization table initialize
+ */
+t_opti_table init_table(int int_nb_arg);
 
 #endif
