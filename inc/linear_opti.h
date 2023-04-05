@@ -128,19 +128,6 @@ typedef struct          s_opti_table
 
 /* ******************************* PROTOTYPES  ******************************* */
 
-
-/*!
- *  \fn static void swap_value(t_data* ptr_a, t_data* ptr_b )
- *  \author DURAND Nicolas Erich Pierre <nicolas.durand@cy-tech.fr>
- *  \version 1.0
- *  \date Wed 29 March 2023 - 12:44:41
- *  \brief swap the value of two the table
- *  \param ptr_a : pointer to the first value
- *  \param ptr_b : pointer to the second value
- */
-static void swap_value(t_data* ptr_a, t_data* ptr_b);
-
-
 /*!
  *  \fn static int* find_entry(t_opti_table tbl)
  *  \author DURAND Nicolas Erich Pierre <nicolas.durand@cy-tech.fr>
@@ -224,6 +211,6 @@ void free_table(t_opti_table tbl);
  *  \param int_nb_arg   :   number of argument
  *  \return the optimization table initialize
  */
-t_opti_table init_table(int int_nb_arg);
+t_opti_table init_table(int int_nb_arg, float* X1, float* X2, float* ugo);
 
 #endif

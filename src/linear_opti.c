@@ -24,12 +24,8 @@
 //librairies
 #include "../inc/linear_opti.h"
 
-t_opti_table init_table(int int_nb_arg)//, float* X1, float* X2, float* Y)
+t_opti_table init_table(int int_nb_arg, float* X1, float* X2, float* ugo)
 {
-
-    float X1[4] = {39,2.5,0.125,17.5};
-    float X2[4] = {69, 7.5, 0.125, 10}; 
-    float ugo[4] = {0,240,5,595};
 
     t_opti_table res;
     res.int_arg = int_nb_arg;
@@ -121,16 +117,6 @@ void show_table(t_opti_table tbl)
         }
         putchar('\n');
     }
-}
-
-
-/* ------------------------------------------------------------------------ */
-
-static void swap_value(t_data* ptr_a, t_data* ptr_b )
-{
-    t_data tmp = *ptr_a;
-    *ptr_a = *ptr_b;
-    *ptr_b = tmp;
 }
 
 
@@ -306,7 +292,11 @@ int main (int argc, char** argv) {
     (void)(argc);
     (void)(argv);
 
-    t_opti_table res = init_table(3);
+    float X1[4] = {39,2.5,0.125,17.5};
+    float X2[4] = {69, 7.5, 0.125, 10}; 
+    float ugo[4] = {0,240,5,595};
+    
+    t_opti_table res = init_table(3, X1, X2, ugo);
 
     optimisation(res);
 

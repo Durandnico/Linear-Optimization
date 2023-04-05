@@ -1,5 +1,5 @@
 # README
-## Project : ING1-NAME 
+## Project : ING1-optimisation-linéaire 
 ### Table des matières
 1. [Compiler](#compiler)
 2. [Lancer l'exécutable](#exe)
@@ -17,7 +17,7 @@ Cela créera aussi l'éxecutable.
 ***
 Pour lancer l'exécutable :
 ```sh
-./bin/NAME
+./bin/Linear-Opti
 ```
 #### Supprimer les dossiers bin (executable), obj (fichiers .o) et doc (DoxyFile)
 ***
