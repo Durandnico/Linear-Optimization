@@ -49,7 +49,7 @@
 
 typedef enum        s_type_var
 {
-    VAR_TYPE_FLOAT = 1,
+    VAR_TYPE_FLOAT,
     VAR_TYPE_STRING         
 }                   t_type_var;
 
@@ -120,7 +120,7 @@ typedef struct          s_opti_table
  *  \def ABORT_IF(a, msg)
  *  \brief 
  */
-#define ABORT_IF(a, msg) if(a) { fprintf(stderr,"%s",msg); exit(1); }
+#define ABORT_IF(a, msg) if(a) { fprintf(stderr,"%s\n",msg); exit(1); }
 
 
 /* ******************************** STRUCTURES ******************************** */
@@ -150,11 +150,11 @@ static void swap_value(t_data* ptr_a, t_data* ptr_b);
  *  \param tbl : the table to search
  *  \return pointer to the index of the entry or NULL if not found 
  */
-static int find_entry_var(t_table_value arr);
+static int* find_entry(t_opti_table tbl);
 
 
 /*!
- *  \fn static int* find_exit(t_opti_table tbl)
+ *  \fn static int* find_exit(t_opti_table tbl, int int_entry)
  *  \author DURAND Nicolas Erich Pierre <nicolas.durand@cy-tech.fr>
  *  \version 1.0
  *  \date Fri 31 March 2023 - 11:41:08
@@ -162,10 +162,32 @@ static int find_entry_var(t_table_value arr);
  *  \param tbl : the table to search
  *  \return pointer to the index of the exit or NULL if not found
  */
-static int find_exit_var(t_opti_table arr);
+static int* find_exit(t_opti_table tbl, int int_entry);
 
 
+/*!
+ *  \fn static void divide_line(t_opti_table tbl, int int_entry, int int_exit)
+ *  \author DURAND Nicolas Erich Pierre <nicolas.durand@cy-tech.fr>
+ *  \version 1.0
+ *  \date Fri 31 March 2023 - 11:48:57
+ *  \brief divide the line of index int_exit by the value of the cell of index (int_entry, int_exit)
+ *  \param tbl : the opti table 
+ */
+static void divide_line(t_opti_table tbl, int int_entry, int int_exit);
 
+
+/*!
+ *  \fn static void substract_nlinetoline(t_opti_table tbl, float flt_value, int int_index_source, int int_index_dest)
+ *  \author DURAND Nicolas Erich Pierre <nicolas.durand@cy-tech.fr>
+ *  \version 1.0
+ *  \date Fri 31 March 2023 - 11:52:02
+ *  \brief substract n time source line to the dest line
+ *  \param tbl              : the opti table
+ *  \param flt_value        : the number of time to substract the source line to the dest line
+ *  \param int_index_source : the index of the source line
+ *  \param int_index_dest   : the index of the dest line
+ */
+static void substract_nlinetoline(t_opti_table tbl, float flt_value, int int_index_source, int int_index_dest);
 
 
 
